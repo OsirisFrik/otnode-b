@@ -8,10 +8,10 @@ interface IENV {
   SENTRY_ENV: string
 }
 
+// eslint-disable-next-line no-process-env
 const ENV = process.env
 const DEFAULT_PORT = 3000
-
-let PORT = portfinder.getPort(ENV.PORT || DEFAULT_PORT)
+const PORT = portfinder.getPort(ENV.PORT || DEFAULT_PORT)
 
 const env: IENV = {
   PORT,

@@ -9,10 +9,10 @@ import env from '@utils/config'
 // Routes
 import Routes from '@routes/index'
 
-const debug = Debug('app:server')
+const debug = Debug('otn:server')
 
 interface Server {
-  on(event: 'ready', callback: Function): this
+  on(event: 'ready', callback: () => void): this
 }
 
 class Server extends EventEmitter {
@@ -24,24 +24,27 @@ class Server extends EventEmitter {
     this.config()
   }
 
-  config() {
+  config(): void {
     this.app.use(morgan('dev'))
       .use(express.json())
       .use(express.urlencoded({ extended: true }))
+      .use(cors())
+
+    this.routes()
 
     this.ready()
   }
 
-  routes() {
+  routes(): void {
     this.app.use(Routes)
   }
 
-  ready() {
+  ready(): void {
     if (this.listenerCount('ready') > 0) this.emit('ready')
     else setTimeout(() => this.ready(), 100)
   }
 
-  start() {
+  start(): void {
     this.app.listen(env.PORT, () => debug(`🚀 Server running on ${env.PORT}`))
   }
 }

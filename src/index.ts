@@ -1,7 +1,11 @@
 import * as dotenv from 'dotenv'
-import 'module-alias/register'
-
 dotenv.config()
+
+import { isDev } from './utils/config'
+
+if (!isDev) {
+  require('module-alias/register')
+}
 
 import Server from './server'
 
