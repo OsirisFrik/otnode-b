@@ -1,14 +1,18 @@
 # OTNode Boilerplate
 
 <div align="center">
+
 ![otn](https://img.shields.io/badge/OTNode-v0.0.0-blueviolet)
+
 </div>
 
 <div align="center">
+
 ![node](https://img.shields.io/badge/node->=14.15.1-brightgreen?logo=node.js&logoColor=white)
 ![nodemon](https://img.shields.io/badge/nodemon->=2.0.7-brightgreen?logo=nodemon&logoColor=white)
 ![ts](https://img.shields.io/badge/ts->=4.1.3-blue?logo=TypeScript&logoColor=white)
 ![eslint](https://img.shields.io/badge/eslint->=7.18.0-blue?logo=eslint)
+
 </div>
 
 ## Use
