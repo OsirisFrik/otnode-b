@@ -6,6 +6,8 @@ interface IENV {
   PORT: number | string
   SENTRY_DSN: string
   SENTRY_ENV: string
+  MONGO_URI: string
+  DB_NAME?: string
 }
 
 // eslint-disable-next-line no-process-env
@@ -17,7 +19,9 @@ const env: IENV = {
   PORT,
   NODE_ENV: ENV.NODE_ENV || 'development',
   SENTRY_DSN: ENV.SENTRY_DSN || '',
-  SENTRY_ENV: ENV.SENTRY_ENV || ENV.NODE_ENV || 'development'
+  SENTRY_ENV: ENV.SENTRY_ENV || ENV.NODE_ENV || 'development',
+  MONGO_URI: ENV.MONGO_URI || 'mongodb://localhost:27017',
+  DB_NAME: ENV.DB_NAME
 }
 
 const isDev = env.NODE_ENV === 'development'

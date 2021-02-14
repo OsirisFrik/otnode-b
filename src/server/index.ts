@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 
 import env from '@utils/config'
+import DataBase from './database'
 
 // Routes
 import Routes from '@routes/index'
@@ -18,13 +19,17 @@ interface Server {
 class Server extends EventEmitter {
   public app: Application = express()
 
+  private db: DataBase = new DataBase()
+  private dbReady: Boolean = false
+
   constructor() {
     super()
 
+    this.db.on('ready', () => this.dbReady = true)
     this.config()
   }
 
-  config(): void {
+  async config(): Promise<void> {
     this.app.use(morgan('dev'))
       .use(express.json())
       .use(express.urlencoded({ extended: true }))
@@ -40,7 +45,7 @@ class Server extends EventEmitter {
   }
 
   ready(): void {
-    if (this.listenerCount('ready') > 0) this.emit('ready')
+    if (this.listenerCount('ready') > 0 && this.dbReady) this.emit('ready')
     else setTimeout(() => this.ready(), 100)
   }
 
