@@ -7,6 +7,9 @@ interface IENV {
   SENTRY_DSN: string
   SENTRY_ENV: string
   MONGO_URI: string
+  TOKEN_SECRET: string
+
+  // Optionals
   DB_NAME?: string
 }
 
@@ -21,7 +24,8 @@ const env: IENV = {
   SENTRY_DSN: ENV.SENTRY_DSN || '',
   SENTRY_ENV: ENV.SENTRY_ENV || ENV.NODE_ENV || 'development',
   MONGO_URI: ENV.MONGO_URI || 'mongodb://localhost:27017',
-  DB_NAME: ENV.DB_NAME
+  DB_NAME: ENV.DB_NAME,
+  TOKEN_SECRET: ENV.TOKEN_SECRET || 'hfbo8wygf8h3oq8rh'
 }
 
 const isDev = env.NODE_ENV === 'development'
