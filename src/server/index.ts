@@ -10,6 +10,9 @@ import DataBase from './database'
 // Routes
 import Routes from '@routes/index'
 
+// Bootstrap
+import Bootstrap from '../bootstrap'
+
 const debug = Debug('otn:server')
 
 interface Server {
@@ -25,7 +28,7 @@ class Server extends EventEmitter {
   constructor() {
     super()
 
-    this.db.on('ready', () => this.dbReady = true)
+    this.db.on('ready', () => this.loadBootstrap())
     this.config()
   }
 
@@ -38,6 +41,12 @@ class Server extends EventEmitter {
     this.routes()
 
     this.ready()
+  }
+
+  async loadBootstrap(): Promise<void> {
+    await Bootstrap()
+
+    this.dbReady = true
   }
 
   routes(): void {
