@@ -6,7 +6,7 @@ interface TokenData {
   [key: string]: unknown
 }
 
-async function createAuthToken(data: TokenData, opt: SignOptions): Promise<string> {
+async function createAuthToken(data: TokenData, opt: SignOptions = {}): Promise<string> {
   try {
     return jwt.sign(data, env.TOKEN_SECRET, opt)
   } catch (err) {

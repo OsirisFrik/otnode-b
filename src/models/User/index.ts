@@ -1,7 +1,5 @@
 import { Document, Types, Schema, model, Model } from 'mongoose'
-
-// Models
-import UserCredential from './UserCredentials'
+import { signUp, UserModelStatics } from './statics'
 
 interface User extends Document {
   _id: Types.ObjectId
@@ -11,9 +9,7 @@ interface User extends Document {
   lastName?: string
 }
 
-interface UserModel extends Model<User> {
-  signUp(data: object, password: string): Promise<User>
-}
+interface UserModel extends Model<User>, UserModelStatics {}
 
 const UserSchema: Schema = new Schema({
   username: {
@@ -45,25 +41,13 @@ UserSchema.virtual('fullName').get(function fullName(this: User) {
 })
 
 // Statics
-async function signUp(
-  this: UserModel,
-  data: object,
-  password: string
-): Promise<User> {
-  try {
-    const user = new this(data)
-
-    await UserCredential.createCredential(user._id, password)
-    await user.save()
-
-    return user
-  } catch (err) {
-    throw err
-  }
-}
-
 UserSchema.statics.signUp = signUp
 
 const UserModel = model<User, UserModel>('user', UserSchema)
 
 export default UserModel
+
+export {
+  User,
+  UserModel
+}
